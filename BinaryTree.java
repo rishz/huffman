@@ -39,83 +39,12 @@ public class BinaryTree {
 
 	private int size;
 
-	public BinaryTree(Integer freq) {
-		this.root = this.takeInput(freq, null, false);
-
-	}
 	public BinaryTree(Integer freq, Node left, Node right){
 		this.root = new Node(freq, left, right);
 	}
+
 	public BinaryTree(Integer freq, BinaryTree leftTree, BinaryTree rightTree, boolean isTree){
 		this.root = new Node(freq, leftTree.root, rightTree.root);
-	}
-
-
-	private Node takeInput(Integer freq, Node parent, boolean leftchild) {
-		if (parent == this.root) {
-			System.out.println("Enter the data for Root: ");
-		} 
-		
-		int cData = freq;
-		Node child = new Node(cData, null, null);
-		this.size++;
-		System.out.println("Do you have a left child for " + cData);
-		Boolean isLeft = true;
-		if (isLeft) {
-			child.left = this.takeInput(freq, child, true);
-		}
-		System.out.println("Do you have a right child for " + cData);
-		Boolean isRight = true;
-		if (isRight) {
-			child.right = this.takeInput(freq, child, false);
-		}
-		return child;
-	}
-
-	public BinaryTree(int[] preOrder, int[] inOrder) {
-		this.root = this.construct(preOrder, 0, preOrder.length - 1, inOrder, 0, inOrder.length - 1);
-	}
-
-	private Node construct(int[] pre, int psi, int pli, int[] in, int isi, int ili) {
-		if (psi > pli || isi > ili) {
-			return null;
-		}
-		Node retval = new Node(pre[psi], null, null);
-		int si = -1;
-		for (int i = isi; i <= ili; i++) {
-			if (retval.data == in[i]) {
-				si = i;
-				break;
-			}
-		}
-		int srl = si - isi;
-		retval.left = construct(pre, psi + 1, psi + srl, in, isi, si - 1);
-		retval.right = construct(pre, psi + srl + 1, pli, in, si + 1, ili);
-
-		return retval;
-	}
-
-	public BinaryTree(int[] postOrder, int[] inOrder, int type) {
-		this.root = this.construct(postOrder, 0, postOrder.length - 1, inOrder, 0, inOrder.length - 1, 1);
-	}
-
-	private Node construct(int[] post, int psi, int pli, int[] in, int isi, int ili, int type) {
-		if (psi > pli || isi > ili) {
-			return null;
-		}
-		Node retval = new Node(post[pli], null, null);
-		int si = -1;
-		for (int i = isi; i <= ili; i++) {
-			if (retval.data == in[i]) {
-				si = i;
-				break;
-			}
-		}
-		int srl = ili - si;
-		retval.left = construct(post, psi, psi + srl - 1, in, isi, si - 1, 1);
-		retval.right = construct(post, psi + srl, pli - 1, in, si + 1, ili, 1);
-
-		return retval;
 	}
 
 	public void display() {
